@@ -1,4 +1,5 @@
 param location string
+param subnetId string
 param vmName string
 @secure()
 param adminUsername string
@@ -41,14 +42,6 @@ resource vm 'Microsoft.Compute/virtualMachines@2024-07-01' = {
     }
 }
 
-// Call the network module
-module network 'network.bicep' = {
-  name: 'network-deployment'
-  params: {
-    location: location
-  }
-}
-
 resource nic 'Microsoft.Network/networkInterfaces@2024-05-01' = {
   name: nicName
   location: location
@@ -58,7 +51,7 @@ resource nic 'Microsoft.Network/networkInterfaces@2024-05-01' = {
         name: 'ipconfig1'
         properties: {
           subnet: {
-            id: network.outputs.vmSubnetId
+            id: subnetId
           }
           privateIPAllocationMethod: 'Dynamic'
         }

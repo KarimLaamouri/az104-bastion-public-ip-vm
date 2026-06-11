@@ -1,0 +1,6 @@
+using '../main.bicep'
+
+param location = 'eastus'
+param vmName = 'vm-bastion-01'
+param adminUsername = 'azureuser'
+param adminPassword = 'ChangeMe!12345'

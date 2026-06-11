@@ -1,4 +1,5 @@
 param location string
+param bastionSubnetId string
 
 var publicIpName = 'pip-bastion'
 var bastionHostName = 'bastion-vm'
@@ -12,7 +13,7 @@ resource bastionHost 'Microsoft.Network/bastionHosts@2024-05-01' = {
         name: 'bastionIpConfig'
         properties: {
           subnet: {
-            id: network.outputs.bastionSubnetId
+            id: bastionSubnetId
           }
           publicIPAddress: {
             id: publicIP.id
@@ -20,13 +21,6 @@ resource bastionHost 'Microsoft.Network/bastionHosts@2024-05-01' = {
         }
       }
     ]
-  }
-}
-
-module network 'network.bicep' = {
-  name: 'network-deployment'
-  params: {
-    location: location
   }
 }
 
